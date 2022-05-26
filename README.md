@@ -1,4 +1,4 @@
-# Stealth Game - Unreal Engine 4 C++ Udemy Course
+# Stealth Game - Unreal Engine 4 C++ 
 
 A multiplayer game on UE4 
 
