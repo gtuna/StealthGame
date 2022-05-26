@@ -1,2 +1,2 @@
 # StealthGame
-a game on UE4 
+a multiplayer game on UE4 
