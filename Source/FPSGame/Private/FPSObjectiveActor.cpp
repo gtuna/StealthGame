@@ -40,10 +40,10 @@ void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 
 	PlayEffects();
 
-	AFPSCharacter* MyPawn = Cast<AFPSCharacter>(OtherActor); //any number of actors can overlap, so we need to cast to our pawn/character
-	if (MyPawn)
+	AFPSCharacter* MyCharacter = Cast<AFPSCharacter>(OtherActor); //any number of actors can overlap, so we need to cast to our pawn/character
+	if (MyCharacter)
 	{
-		MyPawn->bIsCarryingObjective = true;
+		MyCharacter->bIsCarryingObjective = true;
 
 		Destroy();
 	}
