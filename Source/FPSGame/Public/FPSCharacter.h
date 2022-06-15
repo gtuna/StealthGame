@@ -19,6 +19,10 @@ class AFPSCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+	// create a trigger capsule
+	UPROPERTY(VisibleAnywhere, Category = "Trigger Capsule")
+	class UCapsuleComponent* TriggerCapsule;
+
 protected:
 
 	/** Pawn mesh: 1st person view  */
@@ -51,6 +55,17 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Gameplay")
 	bool bIsCarryingObjective;
 
+	// declare overlap begin function
+	UFUNCTION()
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// declare overlap end function
+	UFUNCTION()
+	void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	// declare current light switch
+	class ALightSwitchButtonActor* CurrentLightSwitch;
+
 protected:
 	
 	/** Fires a projectile. */
@@ -61,6 +76,8 @@ protected:
 
 	/** Handles strafing movement, left and right */
 	void MoveRight(float Val);
+
+	void OnAction();
 
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 
