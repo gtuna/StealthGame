@@ -1,9 +1,10 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+#include "FPSCharacter.h"
 
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "FPSCharacter.h"
+
 #include "FPSProjectile.h"
 #include "Kismet/GameplayStatics.h"
 #include "LightSwitchButtonActor.h"

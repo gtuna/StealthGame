@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+#include "FPSObjectiveActor.h"
 
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "FPSCharacter.h"
-#include "FPSObjectiveActor.h"
 #include "Kismet/GameplayStatics.h"
 
 
