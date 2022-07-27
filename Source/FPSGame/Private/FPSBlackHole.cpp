@@ -18,7 +18,7 @@ AFPSBlackHole::AFPSBlackHole()
 	InnerSphereComponent->SetSphereRadius(100);
 	InnerSphereComponent->SetupAttachment(MeshComp);
 
-	InnerSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AFPSBlackHole::OverlapInnerSphere);
+	//InnerSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AFPSBlackHole::OverlapInnerSphere);
 
 	OuterSphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("OuterSphereComp"));
 	OuterSphereComponent->SetSphereRadius(3000);
