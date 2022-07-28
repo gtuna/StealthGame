@@ -4,6 +4,8 @@
 
 #include "FPSAIGuard.h"
 
+#include "DrawDebugHelpers.h"
+
 // Sets default values
 AFPSAIGuard::AFPSAIGuard()
 {
@@ -11,7 +13,8 @@ AFPSAIGuard::AFPSAIGuard()
 	PrimaryActorTick.bCanEverTick = false;
 
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
-	
+
+	PawnSensingComp->OnSeePawn.AddDynamic(this, &AFPSAIGuard::OnPawnSeen);
 	
 }
 
@@ -20,6 +23,15 @@ void AFPSAIGuard::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void AFPSAIGuard::OnPawnSeen(APawn* SeenPawn)
+{
+	if (!SeenPawn)
+	{
+		return;
+	}
+	DrawDebugSphere(GetWorld(), SeenPawn->GetActorLocation(), 32.0f, 12 , FColor::Yellow, false, 10.0f);
 }
 
 // Called every frame
