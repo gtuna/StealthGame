@@ -4,10 +4,11 @@
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-
+#include "Components/PawnNoiseEmitterComponent.h"
 #include "FPSProjectile.h"
 #include "Kismet/GameplayStatics.h"
 #include "LightSwitchButtonActor.h"
+
 
 
 AFPSCharacter::AFPSCharacter()
@@ -42,6 +43,10 @@ AFPSCharacter::AFPSCharacter()
 
 	// set current light switch to null
 	CurrentLightSwitch = nullptr;
+
+	NoiseEmitterComponent = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("NoiseEmitter"));
+
+	
 	
 }
 
