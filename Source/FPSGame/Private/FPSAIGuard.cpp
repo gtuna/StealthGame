@@ -12,19 +12,19 @@ AFPSAIGuard::AFPSAIGuard()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
-
-	PawnSensingComp->OnSeePawn.AddDynamic(this, &AFPSAIGuard::OnPawnSeen);
-	PawnSensingComp->OnHearNoise.AddDynamic(this, &AFPSAIGuard::OnNoiseHeard);
-	
+	GuardState = EAIState::Idle;
 }
 
 // Called when the game starts or when spawned
 void AFPSAIGuard::BeginPlay()
 {
 	Super::BeginPlay();
+
 	OriginalRotation = GetActorRotation();
+		
+	PawnSensingComp->OnSeePawn.AddDynamic(this, &AFPSAIGuard::OnPawnSeen);
+	PawnSensingComp->OnHearNoise.AddDynamic(this, &AFPSAIGuard::OnNoiseHeard);
 }
 
 void AFPSAIGuard::OnPawnSeen(APawn* SeenPawn)
@@ -40,10 +40,18 @@ void AFPSAIGuard::OnPawnSeen(APawn* SeenPawn)
 	{
 		GM->CompleteMission(SeenPawn,false);
 	}
+	SetGuardState(EAIState::Alerted);
+	
 }
 
 void AFPSAIGuard::OnNoiseHeard(APawn* NoiseInstigator, const FVector& Location, float Volume)
 {
+
+	if (GuardState == EAIState::Alerted)
+	{
+		return;
+	}
+	
 	DrawDebugSphere(GetWorld(), Location, 32.0f, 12 , FColor::Red, false, 10.0f);
 
 	FVector Direction = Location - GetActorLocation();
@@ -61,8 +69,27 @@ void AFPSAIGuard::OnNoiseHeard(APawn* NoiseInstigator, const FVector& Location, 
 
 void AFPSAIGuard::ResetOrientation()
 {
+	if (GuardState == EAIState::Alerted)
+	{
+		return;
+	}
+	
 	SetActorRotation(OriginalRotation);
+	SetGuardState(EAIState::Idle);
 }
+
+void AFPSAIGuard::SetGuardState(EAIState NewState)
+{
+	if (GuardState == NewState)
+	{
+		return;
+	}
+
+	GuardState = NewState;
+
+	OnStateChanged(GuardState);
+}
+
 // Called every frame
 void AFPSAIGuard::Tick(float DeltaTime)
 {
