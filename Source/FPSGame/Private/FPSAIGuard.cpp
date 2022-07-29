@@ -5,17 +5,18 @@
 #include "FPSAIGuard.h"
 
 #include "DrawDebugHelpers.h"
+#include "FPSGameMode.h"
 
 // Sets default values
 AFPSAIGuard::AFPSAIGuard()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComponent"));
 
 	PawnSensingComp->OnSeePawn.AddDynamic(this, &AFPSAIGuard::OnPawnSeen);
-	PawnSensingComp->OnHearNoise.AddDynamic(this,&AFPSAIGuard::OnNoiseHeard);
+	PawnSensingComp->OnHearNoise.AddDynamic(this, &AFPSAIGuard::OnNoiseHeard);
 	
 }
 
@@ -33,6 +34,12 @@ void AFPSAIGuard::OnPawnSeen(APawn* SeenPawn)
 		return;
 	}
 	DrawDebugSphere(GetWorld(), SeenPawn->GetActorLocation(), 32.0f, 12 , FColor::Yellow, false, 10.0f);
+	
+	AFPSGameMode* GM = Cast<AFPSGameMode>( GetWorld()->GetAuthGameMode());
+	if (GM)
+	{
+		GM->CompleteMission(SeenPawn,false);
+	}
 }
 
 void AFPSAIGuard::OnNoiseHeard(APawn* NoiseInstigator, const FVector& Location, float Volume)
