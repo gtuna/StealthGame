@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Perception/PawnSensingComponent.h"
 #include "FPSAIGuard.h"
+#include "Perception/PawnSensingComponent.h"
 #include "DrawDebugHelpers.h"
 #include "FPSGameMode.h"
 #include "UnrealNetwork.h"
