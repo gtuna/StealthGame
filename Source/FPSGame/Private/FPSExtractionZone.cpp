@@ -38,6 +38,7 @@ void AFPSExtractionZone::HandleOverlap(UPrimitiveComponent* OverlappedComponent,
 	{
 		return;
 	}
+	
 	if (MyPawn->bIsCarryingObjective)
 	{
 		AFPSGameMode* GM = Cast<AFPSGameMode>( GetWorld()->GetAuthGameMode());

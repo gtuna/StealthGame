@@ -8,7 +8,7 @@
 #include "FPSProjectile.h"
 #include "Kismet/GameplayStatics.h"
 #include "LightSwitchButtonActor.h"
-
+#include "UnrealNetwork.h"
 
 
 AFPSCharacter::AFPSCharacter()
@@ -172,4 +172,14 @@ void AFPSCharacter::OnAction()
 	{
 		CurrentLightSwitch->ToggleLight();
 	}
+}
+
+void AFPSCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AFPSCharacter, bIsCarryingObjective);
+
+	// saves bandwidth , more optimize way.
+	// DOREPLIFETIME_CONDITION(AFPSCharacter, bIsCarryingObjective, COND_OwnerOnly);
 }

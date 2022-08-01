@@ -47,6 +47,7 @@ void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 		AFPSCharacter* MyCharacter = Cast<AFPSCharacter>(OtherActor); //any number of actors can overlap, so we need to cast to our pawn/character
 		if (MyCharacter)
 		{
+			// when this variable sets, all the other clients receive the change. we set it to replicated and add GetLifetimeReplicatedProps func 
 			MyCharacter->bIsCarryingObjective = true;
 
 			Destroy();
