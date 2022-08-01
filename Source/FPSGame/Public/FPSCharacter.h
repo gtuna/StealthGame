@@ -69,6 +69,8 @@ public:
 	// declare current light switch
 	class ALightSwitchButtonActor* CurrentLightSwitch;
 
+	virtual void Tick(float DeltaSeconds) override;
+	
 protected:
 	
 	/** Fires a projectile. */
