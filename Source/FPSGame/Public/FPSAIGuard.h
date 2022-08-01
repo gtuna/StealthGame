@@ -47,11 +47,15 @@ protected:
 
 	FTimerHandle TimerHandle_ResetOrigRotation;
 
+	UPROPERTY(ReplicatedUsing=OnRep_GuardState)
 	EAIState GuardState;
 
+	UFUNCTION()
+	void OnRep_GuardState();
+	
 	void SetGuardState(EAIState NewState);
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, Category = "AI")
 	void OnStateChanged(EAIState NewState);
 public:	
 	// Called every frame
