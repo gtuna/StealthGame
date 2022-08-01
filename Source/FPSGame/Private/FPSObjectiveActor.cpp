@@ -20,6 +20,8 @@ AFPSObjectiveActor::AFPSObjectiveActor()
 	SphereComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap); // only react to overlap with pawns !
 	SphereComp->SetupAttachment(MeshComp);
 
+	SetReplicates(true);
+	
 }
 
 // Called when the game starts or when spawned
@@ -40,12 +42,15 @@ void AFPSObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 
 	PlayEffects();
 
-	AFPSCharacter* MyCharacter = Cast<AFPSCharacter>(OtherActor); //any number of actors can overlap, so we need to cast to our pawn/character
-	if (MyCharacter)
+	if (HasAuthority())
 	{
-		MyCharacter->bIsCarryingObjective = true;
+		AFPSCharacter* MyCharacter = Cast<AFPSCharacter>(OtherActor); //any number of actors can overlap, so we need to cast to our pawn/character
+		if (MyCharacter)
+		{
+			MyCharacter->bIsCarryingObjective = true;
 
-		Destroy();
+			Destroy();
+		}		
 	}
 }
 
